@@ -1,0 +1,55 @@
+name: ido_prime
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.4
+
+dependencies:
+  cached_network_image: ^4.0.5
+  flutter:
+    sdk: flutter
+  flutter_cache_manager: ^3.4.5
+  flutter_form_builder: ^11.0.0
+  flutter_gutter: ^2.2.0
+  flutter_hooks: ^0.21.3+1
+  flutter_svg: ^2.3.0
+  form_builder_validators: ^11.3.0
+  go_router: ^18.1.1
+  google_fonts: ^9.0.0
+  hooks_riverpod: ^3.4.3
+  image_picker: ^1.2.4
+  intl: ^0.20.3
+  logger: ^2.8.0
+  lucide_icons_flutter: 4.0.1
+  material_ui: ^1.8.0
+  pdf: ^3.13.1
+  pinput: ^7.0.0
+  printing: ^5.15.1
+  share_plus: ^13.3.1
+  shared_preferences: ^2.5.6
+  supabase_flutter: ^2.18.3
+  url_launcher: ^6.3.3
+  vector_graphics: ^1.2.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.16.2
+  flutter_gen_runner: ^5.15.0
+  vector_graphics_compiler: ^1.3.2
+
+flutter_gen:
+  output: lib/src/core/generated/
+  integrations:
+    image: true
+    flutter_svg: true
+
+flutter:
+  uses-material-design: true
+  assets:
+    - path: assets/svgs/
+      transformers:
+        - package: vector_graphics_compiler

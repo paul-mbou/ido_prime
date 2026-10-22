@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>IDO · Inspiration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #D3AF35;
+      --on-primary: #1A0F2F;
+      --bg: #1A0F2F;
+      --surface: #241939;
+      --surface-high: #1F1435;
+      --muted: #89809C;
+      --on-surface: #F4F1F9;
+      --outline: #3A3150;
+      --bottom-nav: #0B081B;
+      --like: #E25555;
+      --primary-container: #3D3420;
+      --secondary-container: #2E2445;
+      --radius: 16px;
+      --font: "DM Sans", system-ui, sans-serif;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: #0a0614;
+      font-family: var(--font);
+      color: var(--on-surface);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .phone {
+      width: 390px;
+      max-width: 100%;
+      height: min(844px, 100dvh);
+      margin: 0 auto;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 0 1px #2a1f40, 0 24px 80px rgba(0, 0, 0, .55);
+    }
+
+    /* ── App bar ── */
+    .app-bar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px 10px;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 20;
+      border-bottom: 1px solid transparent;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #5a4578, #2a1f40);
+      border: 2px solid var(--primary);
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .search {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid color-mix(in srgb, var(--outline) 70%, transparent);
+      color: var(--muted);
+      font-size: 14px;
+      cursor: text;
+    }
+
+    .search svg {
+      flex-shrink: 0;
+      opacity: .85;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--on-surface);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .icon-btn .dot {
+      position: absolute;
+      top: 8px;
+      right: 9px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 1.5px solid var(--bg);
+    }
+
+    /* ── Screens ── */
+    .screen {
+      flex: 1;
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: calc(88px + var(--safe-bottom));
+      scrollbar-width: none;
+    }
+
+    .scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* ── Discovery header ── */
+    .context-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 4px 16px 0;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-container);
+      border: 1px solid color-mix(in srgb, var(--primary) 45%, transparent);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .context-chip svg {
+      opacity: .9;
+    }
+
+    .section-label {
+      padding: 14px 16px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      flex-shrink: 0;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--outline) 80%, transparent);
+      background: var(--surface);
+      color: var(--on-surface);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+
+    .chip[aria-selected="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+    }
+
+    .boards-row {
+      display: flex;
+      gap: 10px;
+      padding: 0 16px 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .boards-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .board-pill {
+      flex-shrink: 0;
+      width: 112px;
+      border: none;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font-family: var(--font);
+    }
+
+    .board-cover {
+      height: 72px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      background: var(--surface);
+      border: 1px solid color-mix(in srgb, var(--outline) 70%, transparent);
+    }
+
+    .board-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .board-cover.new {
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      grid-template-columns: none;
+      grid-template-rows: none;
+    }
+
+    .board-pill span {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .board-pill small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* ── Masonry grid ── */
+    .masonry {
+      column-count: 2;
+      column-gap: 10px;
+      padding: 0 16px 8px;
+    }
+
+    .pin {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      border: none;
+      background: transparent;
+      padding: 0;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font-family: var(--font);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      animation: fadeUp .35s ease both;
+    }
+
+    .pin:nth-child(2) {
+      animation-delay: .04s;
+    }
+
+    .pin:nth-child(3) {
+      animation-delay: .08s;
+    }
+
+    .pin:nth-child(4) {
+      animation-delay: .12s;
+    }
+
+    .pin:nth-child(5) {
+      animation-delay: .16s;
+    }
+
+    .pin:nth-child(6) {
+      animation-delay: .2s;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .pin img {
+      width: 100%;
+      display: block;
+      border-radius: var(--radius);
+      border: 1px solid color-mix(in srgb, var(--outline) 55%, transparent);
+      background: var(--surface);
+    }
+
+    .pin-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 8px 2px 2px;
+    }
+
+    .pin-meta .tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .pin-save {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: color-mix(in srgb, var(--surface) 85%, transparent);
+      color: var(--on-surface);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .pin-save.saved {
+      color: var(--primary);
+    }
+
+    .pin-save.saved svg {
+      fill: var(--primary);
+    }
+
+    .rail-title {
+      padding: 8px 16px 10px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .near-rail {
+      display: flex;
+      gap: 10px;
+      padding: 0 16px 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .near-rail::-webkit-scrollbar {
+      display: none;
+    }
+
+    .near-card {
+      flex-shrink: 0;
+      width: 200px;
+      border: none;
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid color-mix(in srgb, var(--outline) 70%, transparent);
+      overflow: hidden;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font-family: var(--font);
+      padding: 0;
+    }
+
+    .near-card img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .near-card .body {
+      padding: 10px 12px 12px;
+    }
+
+    .near-card strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 650;
+      margin-bottom: 2px;
+    }
+
+    .near-card span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── Detail ── */
+    .detail-bar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 8px 8px 4px;
+      background: color-mix(in srgb, var(--bg) 90%, transparent);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 5;
+    }
+
+    .detail-bar h1 {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .detail-hero {
+      width: 100%;
+      max-height: 52vh;
+      object-fit: cover;
+      display: block;
+      background: var(--surface);
+    }
+
+    .detail-body {
+      padding: 16px 16px 24px;
+    }
+
+    .detail-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tag-pill {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--secondary-container);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .detail-body h2 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .detail-body p {
+      font-size: 14px;
+      line-height: 1.45;
+      color: color-mix(in srgb, var(--on-surface) 78%, var(--muted));
+      margin-bottom: 18px;
+    }
+
+    .vendor-tease {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid color-mix(in srgb, var(--outline) 70%, transparent);
+      margin-bottom: 18px;
+      cursor: pointer;
+    }
+
+    .vendor-tease img {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .vendor-tease .info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .vendor-tease strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .vendor-tease span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .vendor-tease .chev {
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 48px;
+      border-radius: 999px;
+      border: none;
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .12s, opacity .12s;
+    }
+
+    .btn:active {
+      transform: scale(.98);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--on-surface);
+      border: 1.5px solid color-mix(in srgb, var(--outline) 90%, transparent);
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--primary);
+      border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent);
+    }
+
+    .row-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ── Bottom nav ── */
+    .bottom-nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: calc(64px + var(--safe-bottom));
+      padding-bottom: var(--safe-bottom);
+      background: var(--bottom-nav);
+      border-top: 1px solid color-mix(in srgb, var(--outline) 50%, transparent);
+      display: flex;
+      z-index: 30;
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font);
+      font-size: 10px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-item svg {
+      stroke-width: 1.75;
+    }
+
+    /* ── Sheets ── */
+    .scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 6, 20, .62);
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s;
+    }
+
+    .scrim.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sheet {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      background: var(--surface);
+      border-radius: 20px 20px 0 0;
+      border: 1px solid color-mix(in srgb, var(--outline) 60%, transparent);
+      border-bottom: none;
+      padding: 10px 16px calc(20px + var(--safe-bottom));
+      transform: translateY(110%);
+      transition: transform .28s cubic-bezier(.2, .8, .2, 1);
+      max-height: 78%;
+      overflow-y: auto;
+    }
+
+    .sheet.open {
+      transform: none;
+    }
+
+    .sheet-handle {
+      width: 36px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--outline);
+      margin: 0 auto 14px;
+    }
+
+    .sheet h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .sheet .sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .board-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 10px 4px;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font-family: var(--font);
+      text-align: left;
+      cursor: pointer;
+      border-radius: 12px;
+    }
+
+    .board-option:hover,
+    .board-option:focus-visible {
+      background: var(--secondary-container);
+    }
+
+    .board-option .thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--bg);
+      flex-shrink: 0;
+    }
+
+    .board-option .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .board-option .thumb.create {
+      display: grid;
+      place-items: center;
+      grid-template-columns: none;
+      background: var(--primary-container);
+      color: var(--primary);
+      border: 1px dashed color-mix(in srgb, var(--primary) 50%, transparent);
+    }
+
+    .board-option strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .board-option span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: color-mix(in srgb, var(--outline) 70%, transparent);
+      margin: 8px 0;
+    }
+
+    .toast {
+      position: absolute;
+      left: 50%;
+      bottom: calc(80px + var(--safe-bottom));
+      transform: translateX(-50%) translateY(20px);
+      background: var(--surface);
+      border: 1px solid color-mix(in srgb, var(--outline) 80%, transparent);
+      color: var(--on-surface);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      white-space: nowrap;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .35);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .detail-nav-hidden .bottom-nav {
+      display: none;
+    }
+
+    .detail-nav-hidden #screen-detail .scroll {
+      padding-bottom: calc(16px + var(--safe-bottom));
+    }
+
+    .detail-nav-hidden #screen-board .scroll {
+      padding-bottom: calc(130px + var(--safe-bottom));
+    }
+
+    /* ── Mood board detail ── */
+    .board-hero {
+      position: relative;
+      height: 220px;
+      margin: 0 16px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 3px;
+      background: var(--surface);
+      border: 1px solid color-mix(in srgb, var(--outline) 55%, transparent);
+    }
+
+    .board-hero-main {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .board-hero-main img,
+    .board-hero-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .board-hero-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+      min-height: 0;
+    }
+
+    .board-hero-side>div {
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .board-hero-fade {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 56%;
+      background: linear-gradient(to top, var(--bg), transparent);
+      pointer-events: none;
+    }
+
+    .board-head {
+      padding: 14px 16px 8px;
+    }
+
+    .board-head h2 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .board-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .board-meta .count {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .board-head p {
+      font-size: 14px;
+      line-height: 1.45;
+      color: color-mix(in srgb, var(--on-surface) 78%, var(--muted));
+    }
+
+    .board-vendors {
+      display: flex;
+      gap: 8px;
+      padding: 4px 16px 14px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .board-vendors::-webkit-scrollbar {
+      display: none;
+    }
+
+    .board-vendor-chip {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px 6px 6px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid color-mix(in srgb, var(--outline) 70%, transparent);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--on-surface);
+      cursor: pointer;
+      font-family: var(--font);
+    }
+
+    .board-vendor-chip img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .board-grid {
+      column-count: 2;
+      column-gap: 10px;
+      padding: 0 16px 8px;
+    }
+
+    .board-pin {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      border: none;
+      background: transparent;
+      padding: 0;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font-family: var(--font);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .board-pin img {
+      width: 100%;
+      display: block;
+      border-radius: var(--radius);
+      border: 1px solid color-mix(in srgb, var(--outline) 55%, transparent);
+      background: var(--surface);
+    }
+
+    .board-pin-meta {
+      padding: 8px 2px 2px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .board-empty {
+      margin: 8px 16px 24px;
+      padding: 28px 20px;
+      border-radius: var(--radius);
+      border: 1px dashed color-mix(in srgb, var(--outline) 80%, transparent);
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      column-span: all;
+    }
+
+    .board-dock {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 25;
+      padding: 12px 16px calc(14px + var(--safe-bottom));
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid color-mix(in srgb, var(--outline) 45%, transparent);
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .board-dock.visible {
+      display: flex;
+    }
+
+    .board-dock .row-actions .btn {
+      height: 44px;
+      font-size: 13px;
+    }
+
+    .board-dock .btn-primary {
+      height: 46px;
+    }
+
+
+    /* ── Create board ── */
+    .create-progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 16px 12px;
+    }
+
+    .create-progress .step-dot {
+      flex: 1;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--outline);
+      transition: background .2s;
+    }
+
+    .create-progress .step-dot.on {
+      background: var(--primary);
+    }
+
+    .create-step {
+      display: none;
+      padding: 0 16px 24px;
+      animation: fadeUp .28s ease both;
+    }
+
+    .create-step.active {
+      display: block;
+    }
+
+    .create-step h2 {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .create-step .lede {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 8px;
+    }
+
+    .field {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid color-mix(in srgb, var(--outline) 80%, transparent);
+      background: var(--surface);
+      color: var(--on-surface);
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 500;
+      outline: none;
+      margin-bottom: 14px;
+    }
+
+    .field:focus {
+      border-color: color-mix(in srgb, var(--primary) 70%, transparent);
+    }
+
+    .field::placeholder {
+      color: var(--muted);
+    }
+
+    textarea.field {
+      height: auto;
+      min-height: 88px;
+      padding: 12px 14px;
+      resize: none;
+      line-height: 1.4;
+    }
+
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .cover-opt {
+      border: 2px solid transparent;
+      border-radius: 14px;
+      overflow: hidden;
+      padding: 0;
+      background: var(--surface);
+      cursor: pointer;
+      position: relative;
+      aspect-ratio: 4/3;
+      font-family: var(--font);
+      color: var(--on-surface);
+    }
+
+    .cover-opt img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cover-opt .cap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 8px 10px;
+      background: linear-gradient(to top, rgba(26, 15, 47, .85), transparent);
+      font-size: 12px;
+      font-weight: 650;
+      text-align: left;
+    }
+
+    .cover-opt[aria-selected="true"] {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .event-opt {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1.5px solid color-mix(in srgb, var(--outline) 75%, transparent);
+      background: var(--surface);
+      color: inherit;
+      font-family: var(--font);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .event-opt[aria-selected="true"] {
+      border-color: var(--primary);
+      background: var(--primary-container);
+    }
+
+    .event-opt .ico {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--secondary-container);
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .event-opt strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .event-opt span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .vibe-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .vibe-chip {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--outline) 80%, transparent);
+      background: var(--surface);
+      color: var(--on-surface);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .vibe-chip[aria-selected="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+    }
+
+    .create-preview {
+      margin-top: 8px;
+      padding: 14px;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid color-mix(in srgb, var(--outline) 70%, transparent);
+    }
+
+    .create-preview .label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .create-preview .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .create-preview .mini-cover {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--secondary-container);
+    }
+
+    .create-preview .mini-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .create-preview strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .create-preview span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .create-dock {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 25;
+      padding: 12px 16px calc(14px + var(--safe-bottom));
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid color-mix(in srgb, var(--outline) 45%, transparent);
+      display: none;
+      gap: 10px;
+    }
+
+    .create-dock.visible {
+      display: flex;
+    }
+
+    .create-dock .btn {
+      flex: 1;
+      height: 48px;
+    }
+
+    .create-dock .btn-secondary {
+      flex: 0 0 auto;
+      min-width: 96px;
+      background: var(--surface);
+      color: var(--on-surface);
+      border: 1.5px solid color-mix(in srgb, var(--outline) 90%, transparent);
+    }
+
+    .pending-save {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      margin: 0 16px 14px;
+      padding: 10px;
+      border-radius: 12px;
+      background: var(--primary-container);
+      border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
+    }
+
+    .pending-save.show {
+      display: flex;
+    }
+
+    .pending-save img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .pending-save strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 650;
+      color: var(--primary);
+    }
+
+    .pending-save span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .detail-nav-hidden #screen-create .scroll {
+      padding-bottom: calc(90px + var(--safe-bottom));
+    }
+
+    .board-empty-cta {
+      margin-top: 14px;
+    }
+
+    @media (min-width: 420px) {
+      body {
+        display: grid;
+        place-items: center;
+        padding: 24px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone" id="app">
+    <!-- APP BAR (discovery) -->
+    <header class="app-bar" id="main-bar">
+      <img class="avatar" alt=""
+        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop&q=80" />
+      <div class="search" role="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        Search inspiration…
+      </div>
+      <button class="icon-btn" aria-label="Notifications" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+        </svg>
+        <span class="dot"></span>
+      </button>
+    </header>
+
+    <!-- DISCOVERY -->
+    <section class="screen active" id="screen-discover" aria-label="Inspiration">
+      <div class="scroll">
+        <button class="context-chip" type="button" title="Active event">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M5 3v4M3 5h4M6 17v4M4 19h4M13 3l.5 2.5L16 6l-2.5.5L13 9l-.5-2.5L10 6l2.5-.5L13 3zM18 12l.5 2.5L21 15l-2.5.5L18 18l-.5-2.5L15 15l2.5-.5L18 12z" />
+          </svg>
+          For Summer Wedding
+        </button>
+
+        <div class="section-label">Your boards</div>
+        <div class="boards-row">
+          <button class="board-pill" type="button" data-create-board>
+            <div class="board-cover new">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14" />
+                <path d="M12 5v14" />
+              </svg>
+            </div>
+            <span>New board</span>
+          </button>
+          <button class="board-pill" type="button" data-board-id="gold-forest">
+            <div class="board-cover">
+              <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=200&h=200&fit=crop&q=80"
+                alt="" />
+              <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=200&h=200&fit=crop&q=80"
+                alt="" />
+              <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=200&h=200&fit=crop&q=80"
+                alt="" />
+              <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=200&h=200&fit=crop&q=80"
+                alt="" />
+            </div>
+            <span>Gold & forest</span>
+            <small>12 looks</small>
+          </button>
+          <button class="board-pill" type="button" data-board-id="dot-yaounde">
+            <div class="board-cover">
+              <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=200&h=200&fit=crop&q=80"
+                alt="" />
+              <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=200&h=200&fit=crop&q=80"
+                alt="" />
+              <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=200&h=200&fit=crop&q=80"
+                alt="" />
+              <img src="https://images.unsplash.com/photo-1519677100203-a0e668c92439?w=200&h=200&fit=crop&q=80"
+                alt="" />
+            </div>
+            <span>Dot Yaoundé</span>
+            <small>8 looks</small>
+          </button>
+        </div>
+
+        <div class="chips" role="tablist" aria-label="Categories">
+          <button class="chip" type="button" role="tab" aria-selected="true">All</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Décor</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Tenues</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Tables</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Lieux</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Fleurs</button>
+          <button class="chip" type="button" role="tab" aria-selected="false">Menus</button>
+        </div>
+
+        <div class="masonry" id="masonry">
+          <!-- filled by JS -->
+        </div>
+
+        <div class="rail-title">Near you · Douala</div>
+        <div class="near-rail">
+          <button class="near-card" type="button" data-pin="0">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&h=240&fit=crop&q=80" alt="" />
+            <div class="body">
+              <strong>Garden soirée</strong>
+              <span>Bonanjo · Décor</span>
+            </div>
+          </button>
+          <button class="near-card" type="button" data-pin="2">
+            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=400&h=240&fit=crop&q=80" alt="" />
+            <div class="body">
+              <strong>Coastal vows</strong>
+              <span>Kribi · Lieux</span>
+            </div>
+          </button>
+          <button class="near-card" type="button" data-pin="4">
+            <img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?w=400&h=240&fit=crop&q=80" alt="" />
+            <div class="body">
+              <strong>Gold reception</strong>
+              <span>Akwa · Tables</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DETAIL -->
+    <section class="screen" id="screen-detail" aria-label="Look detail">
+      <header class="detail-bar">
+        <button class="icon-btn" type="button" id="btn-back" aria-label="Back">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </button>
+        <h1 id="detail-title">Look</h1>
+        <button class="icon-btn" type="button" id="btn-detail-save" aria-label="Save">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+          </svg>
+        </button>
+      </header>
+      <div class="scroll">
+        <img class="detail-hero" id="detail-hero" alt="" src="" />
+        <div class="detail-body">
+          <div class="detail-tags" id="detail-tags"></div>
+          <h2 id="detail-heading"></h2>
+          <p id="detail-copy"></p>
+          <div class="vendor-tease" role="button" tabindex="0">
+            <img id="detail-vendor-img" alt="" src="" />
+            <div class="info">
+              <strong id="detail-vendor-name"></strong>
+              <span>Verified vendor · Same vibe</span>
+            </div>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" type="button" id="btn-use-event">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="18" height="18" x="3" y="4" rx="2" />
+                <path d="M16 2v4M8 2v4M3 10h18" />
+              </svg>
+              Use for Summer Wedding
+            </button>
+            <div class="row-actions">
+              <button class="btn btn-outline" type="button" id="btn-vendors">
+                Same vibe vendors
+              </button>
+              <button class="btn btn-ghost" type="button" id="btn-ai">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M5 3v4M3 5h4M6 17v4M4 19h4M13 3l.5 2.5L16 6l-2.5.5L13 9l-.5-2.5L10 6l2.5-.5L13 3zM18 12l.5 2.5L21 15l-2.5.5L18 18l-.5-2.5L15 15l2.5-.5L18 12z" />
+                </svg>
+                Ask AI
+              </button>
+            </div>
+            <button class="btn btn-outline" type="button" data-open-sheet>
+              Save to board
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOOD BOARD DETAIL -->
+    <section class="screen" id="screen-board" aria-label="Mood board">
+      <header class="detail-bar">
+        <button class="icon-btn" type="button" id="btn-board-back" aria-label="Back">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </button>
+        <h1 id="board-bar-title">Board</h1>
+        <button class="icon-btn" type="button" id="btn-board-more" aria-label="More">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="1" />
+            <circle cx="19" cy="12" r="1" />
+            <circle cx="5" cy="12" r="1" />
+          </svg>
+        </button>
+      </header>
+      <div class="scroll">
+        <div class="board-hero" id="board-hero" aria-hidden="true"></div>
+        <div class="board-head">
+          <h2 id="board-name"></h2>
+          <div class="board-meta">
+            <span class="count" id="board-count"></span>
+            <button class="context-chip" type="button" id="board-event-chip" style="margin:0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="18" height="18" x="3" y="4" rx="2" />
+                <path d="M16 2v4M8 2v4M3 10h18" />
+              </svg>
+              <span id="board-event-label"></span>
+            </button>
+          </div>
+          <p id="board-blurb"></p>
+        </div>
+        <div class="section-label" style="padding-top:4px">Vendors in this vibe</div>
+        <div class="board-vendors" id="board-vendors"></div>
+        <div class="section-label">Saved looks</div>
+        <div class="board-grid" id="board-grid"></div>
+      </div>
+    </section>
+
+
+    <!-- CREATE MOOD BOARD -->
+    <section class="screen" id="screen-create" aria-label="Create mood board">
+      <header class="detail-bar">
+        <button class="icon-btn" type="button" id="btn-create-close" aria-label="Close">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+        <h1>New mood board</h1>
+        <span style="width:40px"></span>
+      </header>
+      <div class="create-progress" aria-hidden="true">
+        <div class="step-dot on" data-dot="0"></div>
+        <div class="step-dot" data-dot="1"></div>
+        <div class="step-dot" data-dot="2"></div>
+      </div>
+      <div class="pending-save" id="pending-save">
+        <img id="pending-save-img" alt="" src="" />
+        <div>
+          <strong>Will save this look</strong>
+          <span id="pending-save-title"></span>
+        </div>
+      </div>
+      <div class="scroll">
+        <!-- Step 1 -->
+        <div class="create-step active" data-step="0">
+          <h2>Name your board</h2>
+          <p class="lede">Something you’ll recognize later — a vibe, a ceremony, or a color story.</p>
+          <label class="field-label" for="board-name-input">Board name</label>
+          <input class="field" id="board-name-input" type="text" maxlength="40" placeholder="e.g. Soft gold reception"
+            autocomplete="off" />
+          <label class="field-label" for="board-note-input">Note <span
+              style="font-weight:500;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <textarea class="field" id="board-note-input" maxlength="160"
+            placeholder="What feeling are you chasing?"></textarea>
+          <div class="create-preview">
+            <div class="label">Preview</div>
+            <div class="row">
+              <div class="mini-cover" id="create-mini-cover"></div>
+              <div>
+                <strong id="create-preview-name">Untitled board</strong>
+                <span id="create-preview-meta">0 looks · Not linked yet</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="create-step" data-step="1">
+          <h2>Link an event?</h2>
+          <p class="lede">Boards get more useful when they’re tied to a celebration you’re planning.</p>
+          <div class="event-list" id="create-event-list">
+            <button class="event-opt" type="button" data-event="Summer Wedding" aria-selected="true">
+              <div class="ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="18" x="3" y="4" rx="2" />
+                  <path d="M16 2v4M8 2v4M3 10h18" />
+                </svg>
+              </div>
+              <div>
+                <strong>Summer Wedding</strong>
+                <span>Aug 2026 · Douala · Planning</span>
+              </div>
+            </button>
+            <button class="event-opt" type="button" data-event="Family Dot" aria-selected="false">
+              <div class="ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="18" x="3" y="4" rx="2" />
+                  <path d="M16 2v4M8 2v4M3 10h18" />
+                </svg>
+              </div>
+              <div>
+                <strong>Family Dot</strong>
+                <span>Oct 2026 · Yaoundé · Upcoming</span>
+              </div>
+            </button>
+            <button class="event-opt" type="button" data-event="" aria-selected="false">
+              <div class="ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg>
+              </div>
+              <div>
+                <strong>Skip for now</strong>
+                <span>You can link an event later</span>
+              </div>
+            </button>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="create-step" data-step="2">
+          <h2>Pick a starting vibe</h2>
+          <p class="lede">Choose a cover mood and a few tags. You can change these anytime.</p>
+          <div class="field-label">Cover</div>
+          <div class="cover-grid" id="cover-grid">
+            <button class="cover-opt" type="button"
+              data-cover="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=450&fit=crop&q=80"
+              aria-selected="true">
+              <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=450&fit=crop&q=80"
+                alt="" />
+              <span class="cap">Gold & green</span>
+            </button>
+            <button class="cover-opt" type="button"
+              data-cover="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&h=450&fit=crop&q=80"
+              aria-selected="false">
+              <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&h=450&fit=crop&q=80"
+                alt="" />
+              <span class="cap">Coastal dusk</span>
+            </button>
+            <button class="cover-opt" type="button"
+              data-cover="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&h=450&fit=crop&q=80"
+              aria-selected="false">
+              <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&h=450&fit=crop&q=80"
+                alt="" />
+              <span class="cap">Lantern glow</span>
+            </button>
+            <button class="cover-opt" type="button"
+              data-cover="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=450&fit=crop&q=80"
+              aria-selected="false">
+              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=450&fit=crop&q=80"
+                alt="" />
+              <span class="cap">Feast table</span>
+            </button>
+          </div>
+          <div class="field-label" style="margin-top:14px">Tags</div>
+          <div class="vibe-chips" id="vibe-chips">
+            <button class="vibe-chip" type="button" aria-selected="true">Décor</button>
+            <button class="vibe-chip" type="button" aria-selected="false">Tenues</button>
+            <button class="vibe-chip" type="button" aria-selected="false">Tables</button>
+            <button class="vibe-chip" type="button" aria-selected="false">Fleurs</button>
+            <button class="vibe-chip" type="button" aria-selected="false">Menus</button>
+            <button class="vibe-chip" type="button" aria-selected="false">Lieux</button>
+            <button class="vibe-chip" type="button" aria-selected="false">Traditional</button>
+            <button class="vibe-chip" type="button" aria-selected="false">Modern</button>
+          </div>
+          <div class="create-preview">
+            <div class="label">Ready to create</div>
+            <div class="row">
+              <div class="mini-cover" id="create-ready-cover"></div>
+              <div>
+                <strong id="create-ready-name">Untitled board</strong>
+                <span id="create-ready-meta">0 looks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="bottom-nav" aria-label="Main">
+      <button class="nav-item" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M4 11a9 9 0 0 1 9 9" />
+          <path d="M4 4a16 16 0 0 1 16 16" />
+          <circle cx="5" cy="19" r="1" />
+        </svg>
+        Posts
+      </button>
+      <button class="nav-item active" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path
+            d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+          <path d="M9 18h6" />
+          <path d="M10 22h4" />
+        </svg>
+        Inspiration
+      </button>
+      <button class="nav-item" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M8 2v4M16 2v4" />
+          <rect width="18" height="18" x="3" y="4" rx="2" />
+          <path d="M3 10h18" />
+        </svg>
+        Events
+      </button>
+      <button class="nav-item" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        Vendors
+      </button>
+    </nav>
+
+    <div class="board-dock" id="board-dock">
+      <button class="btn btn-primary" type="button" id="btn-board-event">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect width="18" height="18" x="3" y="4" rx="2" />
+          <path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+        <span id="btn-board-event-label">Use for event</span>
+      </button>
+      <div class="row-actions">
+        <button class="btn btn-outline" type="button" id="btn-board-vendors">Find vendors</button>
+        <button class="btn btn-ghost" type="button" id="btn-board-ai">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M5 3v4M3 5h4M6 17v4M4 19h4M13 3l.5 2.5L16 6l-2.5.5L13 9l-.5-2.5L10 6l2.5-.5L13 3zM18 12l.5 2.5L21 15l-2.5.5L18 18l-.5-2.5L15 15l2.5-.5L18 12z" />
+          </svg>
+          Ask AI
+        </button>
+      </div>
+    </div>
+
+
+    <div class="create-dock" id="create-dock">
+      <button class="btn btn-secondary" type="button" id="btn-create-back">Back</button>
+      <button class="btn btn-primary" type="button" id="btn-create-next">Continue</button>
+    </div>
+
+    <div class="scrim" id="scrim"></div>
+    <aside class="sheet" id="board-sheet" aria-hidden="true">
+      <div class="sheet-handle"></div>
+      <h3>Save to board</h3>
+      <p class="sub">Keep looks for Summer Wedding</p>
+      <button class="board-option" type="button" data-create-board data-board="create">
+        <div class="thumb create">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14" />
+            <path d="M12 5v14" />
+          </svg>
+        </div>
+        <div>
+          <strong>Create new board</strong>
+          <span>Name it after a vibe or event</span>
+        </div>
+      </button>
+      <div class="divider"></div>
+      <button class="board-option" type="button" data-board="Gold & forest" data-board-id="gold-forest">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=80&h=80&fit=crop&q=80" alt="" />
+          <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=80&h=80&fit=crop&q=80" alt="" />
+          <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=80&h=80&fit=crop&q=80" alt="" />
+          <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=80&h=80&fit=crop&q=80" alt="" />
+        </div>
+        <div>
+          <strong>Gold & forest</strong>
+          <span>12 looks</span>
+        </div>
+      </button>
+      <button class="board-option" type="button" data-board="Dot Yaoundé" data-board-id="dot-yaounde">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=80&h=80&fit=crop&q=80" alt="" />
+          <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=80&h=80&fit=crop&q=80" alt="" />
+          <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=80&h=80&fit=crop&q=80" alt="" />
+          <img src="https://images.unsplash.com/photo-1519677100203-a0e668c92439?w=80&h=80&fit=crop&q=80" alt="" />
+        </div>
+        <div>
+          <strong>Dot Yaoundé</strong>
+          <span>8 looks</span>
+        </div>
+      </button>
+      <button class="board-option" type="button" data-board="Kids birthday" data-board-id="kids-birthday">
+        <div class="thumb">
+          <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=80&h=80&fit=crop&q=80" alt="" />
+          <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=80&h=80&fit=crop&q=80" alt="" />
+          <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=80&h=80&fit=crop&q=80" alt="" />
+          <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=80&h=80&fit=crop&q=80" alt="" />
+        </div>
+        <div>
+          <strong>Kids birthday</strong>
+          <span>5 looks</span>
+        </div>
+      </button>
+    </aside>
+
+    <div class="toast" id="toast" role="status"></div>
+  </div>
+
+  <script>
+    const PINS = [
+      {
+        id: 0,
+        cat: "Décor",
+        title: "Candlelit forest arch",
+        copy: "Soft gold candles and greenery for an evening outdoor vow exchange. Warm, intimate, and easy to scale for 80–200 guests.",
+        h: 260,
+        img: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&h=800&fit=crop&q=80",
+        vendor: "Lumina Décor",
+        vendorImg: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=96&h=96&fit=crop&q=80",
+        tags: ["Décor", "Outdoor", "Douala"],
+      },
+      {
+        id: 1,
+        cat: "Tenues",
+        title: "Ivory & gold traditional",
+        copy: "Modern cut with local embroidery — statement without overpowering the celebration palette.",
+        h: 320,
+        img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&h=900&fit=crop&q=80",
+        vendor: "Atelier Ngo",
+        vendorImg: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=96&h=96&fit=crop&q=80",
+        tags: ["Tenues", "Wedding"],
+      },
+      {
+        id: 2,
+        cat: "Lieux",
+        title: "Coastal pavilion at dusk",
+        copy: "Open-air pavilion with sea breeze and string lights — Kribi energy for vows or cocktail hour.",
+        h: 220,
+        img: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&h=700&fit=crop&q=80",
+        vendor: "Vista Venues",
+        vendorImg: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop&q=80",
+        tags: ["Lieux", "Kribi"],
+      },
+      {
+        id: 3,
+        cat: "Fleurs",
+        title: "Cascading white bouquet",
+        copy: "Loose, romantic cascade — pairs with gold & forest boards and low table meadows.",
+        h: 280,
+        img: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&h=850&fit=crop&q=80",
+        vendor: "Petale Studio",
+        vendorImg: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=96&h=96&fit=crop&q=80",
+        tags: ["Fleurs", "Bridal"],
+      },
+      {
+        id: 4,
+        cat: "Tables",
+        title: "Long table, gold runners",
+        copy: "Banquet layout with forest greens and gold chargers — clear path for family-style service.",
+        h: 240,
+        img: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?w=600&h=750&fit=crop&q=80",
+        vendor: "Table & Co",
+        vendorImg: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&q=80",
+        tags: ["Tables", "Reception"],
+      },
+      {
+        id: 5,
+        cat: "Menus",
+        title: "Shared platter feast",
+        copy: "Communal platters, bold spices, elegant plating — celebration food that feels generous.",
+        h: 300,
+        img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=880&fit=crop&q=80",
+        vendor: "Saveurs Douala",
+        vendorImg: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=96&h=96&fit=crop&q=80",
+        tags: ["Menus", "Catering"],
+      },
+      {
+        id: 6,
+        cat: "Décor",
+        title: "Hanging lantern aisle",
+        copy: "Layered lanterns and soft petals — dramatic entrance without blocking guest flow.",
+        h: 250,
+        img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&h=780&fit=crop&q=80",
+        vendor: "Lumina Décor",
+        vendorImg: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=96&h=96&fit=crop&q=80",
+        tags: ["Décor", "Aisle"],
+      },
+      {
+        id: 7,
+        cat: "Invitations",
+        title: "Minimal gold foil invite",
+        copy: "Clean typography, soft lavender stock, gold foil — WhatsApp-ready crop included.",
+        h: 210,
+        img: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&h=650&fit=crop&q=80",
+        vendor: "Press & Paper",
+        vendorImg: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=96&h=96&fit=crop&q=80",
+        tags: ["Invitations"],
+      },
+    ];
+
+    const BOARDS = {
+      "gold-forest": {
+        id: "gold-forest",
+        name: "Gold & forest",
+        countLabel: "12 looks",
+        event: "Summer Wedding",
+        blurb: "Warm gold, deep greens, candlelight — the palette for outdoor evening vows in Douala.",
+        covers: [
+          "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=800&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=400&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=400&h=400&fit=crop&q=80",
+        ],
+        pinIds: [0, 3, 4, 6, 1, 5],
+        vendors: [
+          { name: "Lumina Décor", img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=96&h=96&fit=crop&q=80" },
+          { name: "Petale Studio", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=96&h=96&fit=crop&q=80" },
+          { name: "Table & Co", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&q=80" },
+        ],
+      },
+      "dot-yaounde": {
+        id: "dot-yaounde",
+        name: "Dot Yaoundé",
+        countLabel: "8 looks",
+        event: "Family Dot",
+        blurb: "Bold color, traditional silhouettes, generous tables — celebration that feels like home.",
+        covers: [
+          "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&h=800&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400&h=400&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=400&h=400&fit=crop&q=80",
+        ],
+        pinIds: [1, 5, 7, 4, 2],
+        vendors: [
+          { name: "Atelier Ngo", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=96&h=96&fit=crop&q=80" },
+          { name: "Saveurs Douala", img: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=96&h=96&fit=crop&q=80" },
+          { name: "Press & Paper", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=96&h=96&fit=crop&q=80" },
+        ],
+      },
+      "kids-birthday": {
+        id: "kids-birthday",
+        name: "Kids birthday",
+        countLabel: "5 looks",
+        event: null,
+        blurb: "Playful color, soft balloons, cake-first tables — keep it joyful and easy to execute.",
+        covers: [
+          "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&h=800&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400&h=400&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400&h=400&fit=crop&q=80",
+        ],
+        pinIds: [7, 5, 4],
+        vendors: [
+          { name: "Saveurs Douala", img: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=96&h=96&fit=crop&q=80" },
+        ],
+      },
+    };
+
+    const app = document.getElementById("app");
+    const masonry = document.getElementById("masonry");
+    const toastEl = document.getElementById("toast");
+    const sheet = document.getElementById("board-sheet");
+    const scrim = document.getElementById("scrim");
+    const mainBar = document.getElementById("main-bar");
+    const boardDock = document.getElementById("board-dock");
+    const createDock = document.getElementById("create-dock");
+    const pendingSaveEl = document.getElementById("pending-save");
+
+    let activeCat = "All";
+    let currentPin = null;
+    let currentBoard = null;
+    let detailReturnTo = "discover";
+    let toastTimer = null;
+    let createStep = 0;
+    let createFromSave = false;
+    let pendingPinId = null;
+    let createDraft = {
+      name: "",
+      note: "",
+      event: "Summer Wedding",
+      cover: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=450&fit=crop&q=80",
+      tags: ["Décor"],
+    };
+
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
+    }
+
+    function bookmarkSvg(filled) {
+      return filled
+        ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>`
+        : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>`;
+    }
+
+    function renderGrid() {
+      const list = activeCat === "All" ? PINS : PINS.filter((p) => p.cat === activeCat);
+      masonry.innerHTML = list.map((p) => `
+        <button class="pin" type="button" data-pin="${p.id}" style="animation:none">
+          <img src="${p.img}" alt="" style="height:${p.h}px;object-fit:cover" loading="lazy" />
+          <div class="pin-meta">
+            <span class="tag">${p.cat}</span>
+            <span class="pin-save" data-save="${p.id}" role="button" tabindex="0" aria-label="Save">${bookmarkSvg(false)}</span>
+          </div>
+        </button>
+      `).join("");
+    }
+
+    function showScreen(name) {
+      document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
+      document.getElementById(`screen-${name}`).classList.add("active");
+      const immersion = name === "detail" || name === "board" || name === "create";
+      mainBar.style.display = immersion ? "none" : "flex";
+      app.classList.toggle("detail-nav-hidden", immersion);
+      boardDock.classList.toggle("visible", name === "board");
+      createDock.classList.toggle("visible", name === "create");
+    }
+
+    function openDetail(id, returnTo = "discover") {
+      const p = PINS.find((x) => x.id === Number(id));
+      if (!p) return;
+      currentPin = p;
+      detailReturnTo = returnTo;
+      document.getElementById("detail-hero").src = p.img;
+      document.getElementById("detail-title").textContent = p.cat;
+      document.getElementById("detail-heading").textContent = p.title;
+      document.getElementById("detail-copy").textContent = p.copy;
+      document.getElementById("detail-vendor-name").textContent = p.vendor;
+      document.getElementById("detail-vendor-img").src = p.vendorImg;
+      document.getElementById("detail-tags").innerHTML = p.tags
+        .map((t) => `<span class="tag-pill">${t}</span>`)
+        .join("");
+      showScreen("detail");
+    }
+
+    function openBoard(id) {
+      const b = BOARDS[id];
+      if (!b) return;
+      currentBoard = b;
+      document.getElementById("board-bar-title").textContent = "Mood board";
+      document.getElementById("board-name").textContent = b.name;
+      document.getElementById("board-count").textContent = b.countLabel;
+      document.getElementById("board-blurb").textContent = b.blurb;
+
+      const eventChip = document.getElementById("board-event-chip");
+      const eventLabel = document.getElementById("board-event-label");
+      if (b.event) {
+        eventChip.style.display = "inline-flex";
+        eventLabel.textContent = b.event;
+        document.getElementById("btn-board-event-label").textContent = `Use for ${b.event}`;
+      } else {
+        eventChip.style.display = "none";
+        document.getElementById("btn-board-event-label").textContent = "Link to an event";
+      }
+
+      const covers = b.covers.length >= 3
+        ? b.covers
+        : [b.covers[0], b.covers[0], b.covers[0]];
+      const [c0, c1, c2] = covers;
+      document.getElementById("board-hero").innerHTML = `
+        <div class="board-hero-main"><img src="${c0}" alt="" /></div>
+        <div class="board-hero-side">
+          <div><img src="${c1}" alt="" /></div>
+          <div><img src="${c2}" alt="" /></div>
+        </div>
+      `;
+
+      const vendorsEl = document.getElementById("board-vendors");
+      const vendorsSection = vendorsEl.previousElementSibling;
+      if (!b.vendors.length) {
+        vendorsEl.innerHTML = "";
+        vendorsSection.style.display = "none";
+        vendorsEl.style.display = "none";
+      } else {
+        vendorsSection.style.display = "";
+        vendorsEl.style.display = "";
+        vendorsEl.innerHTML = b.vendors.map((v) => `
+          <button class="board-vendor-chip" type="button" data-vendor="${v.name}">
+            <img src="${v.img}" alt="" />
+            ${v.name}
+          </button>
+        `).join("");
+      }
+
+      const pins = b.pinIds.map((pid) => PINS.find((p) => p.id === pid)).filter(Boolean);
+      const grid = document.getElementById("board-grid");
+      if (!pins.length) {
+        grid.innerHTML = `
+          <div class="board-empty">
+            No looks yet — start collecting ideas.
+            <div class="board-empty-cta">
+              <button class="btn btn-primary" type="button" id="btn-browse-looks" style="margin-top:14px;width:100%">
+                Browse inspiration
+              </button>
+            </div>
+          </div>`;
+        document.getElementById("btn-browse-looks")?.addEventListener("click", () => showScreen("discover"));
+      } else {
+        grid.innerHTML = pins.map((p) => `
+          <button class="board-pin" type="button" data-pin="${p.id}">
+            <img src="${p.img}" alt="" style="height:${Math.round(p.h * 0.85)}px;object-fit:cover" loading="lazy" />
+            <div class="board-pin-meta">${p.title}</div>
+          </button>
+        `).join("");
+      }
+
+      showScreen("board");
+      document.querySelector("#screen-board .scroll").scrollTop = 0;
+    }
+
+    function syncCreatePreview() {
+      const name = createDraft.name.trim() || "Untitled board";
+      const eventBit = createDraft.event ? createDraft.event : "Not linked yet";
+      const tagsBit = createDraft.tags.length ? createDraft.tags.slice(0, 3).join(" · ") : "No tags";
+      document.getElementById("create-preview-name").textContent = name;
+      document.getElementById("create-preview-meta").textContent = `0 looks · ${eventBit}`;
+      document.getElementById("create-ready-name").textContent = name;
+      document.getElementById("create-ready-meta").textContent = `0 looks · ${eventBit} · ${tagsBit}`;
+      const coverHtml = createDraft.cover
+        ? `<img src="${createDraft.cover}" alt="" />`
+        : "";
+      document.getElementById("create-mini-cover").innerHTML = coverHtml;
+      document.getElementById("create-ready-cover").innerHTML = coverHtml;
+    }
+
+    function setCreateStep(step) {
+      createStep = step;
+      document.querySelectorAll(".create-step").forEach((el) => {
+        el.classList.toggle("active", Number(el.dataset.step) === step);
+      });
+      document.querySelectorAll(".create-progress .step-dot").forEach((dot) => {
+        dot.classList.toggle("on", Number(dot.dataset.dot) <= step);
+      });
+      const backBtn = document.getElementById("btn-create-back");
+      const nextBtn = document.getElementById("btn-create-next");
+      backBtn.style.visibility = step === 0 ? "hidden" : "visible";
+      nextBtn.textContent = step === 2 ? "Create board" : "Continue";
+      syncCreatePreview();
+    }
+
+    function resetCreateDraft() {
+      createDraft = {
+        name: "",
+        note: "",
+        event: "Summer Wedding",
+        cover: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=450&fit=crop&q=80",
+        tags: ["Décor"],
+      };
+      document.getElementById("board-name-input").value = "";
+      document.getElementById("board-note-input").value = "";
+      document.querySelectorAll("#create-event-list .event-opt").forEach((btn) => {
+        btn.setAttribute("aria-selected", btn.dataset.event === "Summer Wedding" ? "true" : "false");
+      });
+      document.querySelectorAll("#cover-grid .cover-opt").forEach((btn, i) => {
+        btn.setAttribute("aria-selected", i === 0 ? "true" : "false");
+      });
+      document.querySelectorAll("#vibe-chips .vibe-chip").forEach((btn) => {
+        btn.setAttribute("aria-selected", btn.textContent.trim() === "Décor" ? "true" : "false");
+      });
+    }
+
+    function openCreate({ fromSave = false, pinId = null } = {}) {
+      createFromSave = fromSave;
+      pendingPinId = pinId;
+      closeSheet();
+      resetCreateDraft();
+      if (fromSave && pinId != null) {
+        const p = PINS.find((x) => x.id === Number(pinId));
+        if (p) {
+          pendingSaveEl.classList.add("show");
+          document.getElementById("pending-save-img").src = p.img;
+          document.getElementById("pending-save-title").textContent = p.title;
+          createDraft.cover = p.img;
+          createDraft.tags = [p.cat];
+          document.querySelectorAll("#cover-grid .cover-opt").forEach((btn) => {
+            btn.setAttribute("aria-selected", "false");
+          });
+          document.querySelectorAll("#vibe-chips .vibe-chip").forEach((btn) => {
+            btn.setAttribute("aria-selected", btn.textContent.trim() === p.cat ? "true" : "false");
+          });
+        }
+      } else {
+        pendingSaveEl.classList.remove("show");
+      }
+      setCreateStep(0);
+      showScreen("create");
+      document.querySelector("#screen-create .scroll").scrollTop = 0;
+      setTimeout(() => document.getElementById("board-name-input").focus(), 180);
+    }
+
+    function finishCreate() {
+      const name = createDraft.name.trim();
+      if (!name) {
+        toast("Give your board a name");
+        setCreateStep(0);
+        document.getElementById("board-name-input").focus();
+        return;
+      }
+      const id = `custom-${Date.now()}`;
+      const pinIds = createFromSave && pendingPinId != null ? [Number(pendingPinId)] : [];
+      const cover = createDraft.cover;
+      const tags = createDraft.tags;
+      const note = createDraft.note.trim();
+      BOARDS[id] = {
+        id,
+        name,
+        countLabel: pinIds.length ? `${pinIds.length} look${pinIds.length > 1 ? "s" : ""}` : "0 looks",
+        event: createDraft.event || null,
+        blurb: note || (tags.length
+          ? `A board focused on ${tags.join(", ").toLowerCase()}.`
+          : "Your new mood board — start saving looks."),
+        covers: [cover, cover, cover],
+        pinIds,
+        vendors: [],
+      };
+
+      // Add to discovery boards row
+      const row = document.querySelector(".boards-row");
+      const pill = document.createElement("button");
+      pill.className = "board-pill";
+      pill.type = "button";
+      pill.dataset.boardId = id;
+      pill.innerHTML = `
+        <div class="board-cover">
+          <img src="${cover}" alt="" />
+          <img src="${cover}" alt="" />
+          <img src="${cover}" alt="" />
+          <img src="${cover}" alt="" />
+        </div>
+        <span>${name}</span>
+        <small>${BOARDS[id].countLabel}</small>`;
+      pill.addEventListener("click", () => openBoard(id));
+      row.appendChild(pill);
+
+      toast(createFromSave ? `Board created · look saved` : "Board created");
+      createFromSave = false;
+      pendingPinId = null;
+      pendingSaveEl.classList.remove("show");
+      openBoard(id);
+    }
+
+    function openSheet() {
+      sheet.classList.add("open");
+      scrim.classList.add("open");
+      sheet.setAttribute("aria-hidden", "false");
+    }
+    function closeSheet() {
+      sheet.classList.remove("open");
+      scrim.classList.remove("open");
+      sheet.setAttribute("aria-hidden", "true");
+    }
+
+    document.querySelectorAll(".chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-selected", "false"));
+        chip.setAttribute("aria-selected", "true");
+        activeCat = chip.textContent.trim();
+        renderGrid();
+      });
+    });
+
+    masonry.addEventListener("click", (e) => {
+      const save = e.target.closest("[data-save]");
+      if (save) {
+        e.preventDefault();
+        e.stopPropagation();
+        save.classList.add("saved");
+        save.innerHTML = bookmarkSvg(true);
+        pendingPinId = Number(save.dataset.save);
+        openSheet();
+        return;
+      }
+      const pin = e.target.closest("[data-pin]");
+      if (pin) openDetail(pin.dataset.pin, "discover");
+    });
+
+    document.querySelectorAll(".near-rail [data-pin]").forEach((el) => {
+      el.addEventListener("click", () => openDetail(el.dataset.pin, "discover"));
+    });
+
+    document.querySelectorAll("[data-board-id]").forEach((el) => {
+      if (el.closest("#board-sheet")) return;
+      el.addEventListener("click", () => openBoard(el.dataset.boardId));
+    });
+
+    document.getElementById("board-grid").addEventListener("click", (e) => {
+      const pin = e.target.closest("[data-pin]");
+      if (pin) openDetail(pin.dataset.pin, "board");
+    });
+
+    document.getElementById("board-vendors").addEventListener("click", (e) => {
+      const chip = e.target.closest("[data-vendor]");
+      if (chip) toast(`Opening ${chip.dataset.vendor}`);
+    });
+
+    document.getElementById("btn-back").addEventListener("click", () => {
+      if (detailReturnTo === "board" && currentBoard) openBoard(currentBoard.id);
+      else showScreen("discover");
+    });
+    document.getElementById("btn-board-back").addEventListener("click", () => showScreen("discover"));
+    document.getElementById("btn-board-more").addEventListener("click", () => toast("Rename · Share · Delete"));
+
+    document.querySelectorAll("[data-open-sheet]").forEach((btn) => {
+      btn.addEventListener("click", openSheet);
+    });
+    document.querySelectorAll("[data-create-board]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const fromSave = !!btn.closest("#board-sheet");
+        openCreate({
+          fromSave,
+          pinId: fromSave ? (pendingPinId ?? currentPin?.id ?? null) : null,
+        });
+      });
+    });
+    document.getElementById("btn-detail-save").addEventListener("click", () => {
+      pendingPinId = currentPin?.id ?? null;
+      openSheet();
+    });
+    scrim.addEventListener("click", closeSheet);
+
+    sheet.querySelectorAll("[data-board]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (btn.hasAttribute("data-create-board")) return;
+        const name = btn.dataset.board;
+        closeSheet();
+        toast(`Saved to ${name}`);
+      });
+    });
+
+    // Create flow controls
+    document.getElementById("btn-create-close").addEventListener("click", () => {
+      showScreen("discover");
+    });
+    document.getElementById("btn-create-back").addEventListener("click", () => {
+      if (createStep > 0) setCreateStep(createStep - 1);
+    });
+    document.getElementById("btn-create-next").addEventListener("click", () => {
+      if (createStep === 0) {
+        createDraft.name = document.getElementById("board-name-input").value;
+        createDraft.note = document.getElementById("board-note-input").value;
+        if (!createDraft.name.trim()) {
+          toast("Give your board a name");
+          document.getElementById("board-name-input").focus();
+          return;
+        }
+        setCreateStep(1);
+        return;
+      }
+      if (createStep === 1) {
+        setCreateStep(2);
+        return;
+      }
+      finishCreate();
+    });
+
+    document.getElementById("board-name-input").addEventListener("input", (e) => {
+      createDraft.name = e.target.value;
+      syncCreatePreview();
+    });
+    document.getElementById("board-note-input").addEventListener("input", (e) => {
+      createDraft.note = e.target.value;
+    });
+
+    document.getElementById("create-event-list").addEventListener("click", (e) => {
+      const opt = e.target.closest(".event-opt");
+      if (!opt) return;
+      document.querySelectorAll("#create-event-list .event-opt").forEach((b) => b.setAttribute("aria-selected", "false"));
+      opt.setAttribute("aria-selected", "true");
+      createDraft.event = opt.dataset.event || null;
+      syncCreatePreview();
+    });
+
+    document.getElementById("cover-grid").addEventListener("click", (e) => {
+      const opt = e.target.closest(".cover-opt");
+      if (!opt) return;
+      document.querySelectorAll("#cover-grid .cover-opt").forEach((b) => b.setAttribute("aria-selected", "false"));
+      opt.setAttribute("aria-selected", "true");
+      createDraft.cover = opt.dataset.cover;
+      syncCreatePreview();
+    });
+
+    document.getElementById("vibe-chips").addEventListener("click", (e) => {
+      const chip = e.target.closest(".vibe-chip");
+      if (!chip) return;
+      const on = chip.getAttribute("aria-selected") === "true";
+      chip.setAttribute("aria-selected", on ? "false" : "true");
+      createDraft.tags = [...document.querySelectorAll("#vibe-chips .vibe-chip[aria-selected='true']")]
+        .map((c) => c.textContent.trim());
+      syncCreatePreview();
+    });
+
+    document.getElementById("btn-use-event").addEventListener("click", () => {
+      toast("Added to Summer Wedding");
+    });
+    document.getElementById("btn-vendors").addEventListener("click", () => {
+      toast("Opening vendors · décor");
+    });
+    document.getElementById("btn-ai").addEventListener("click", () => {
+      toast("Ask AI about this look…");
+    });
+
+    document.getElementById("btn-board-event").addEventListener("click", () => {
+      if (!currentBoard) return;
+      toast(currentBoard.event
+        ? `Board linked to ${currentBoard.event}`
+        : "Pick an event to link");
+    });
+    document.getElementById("btn-board-vendors").addEventListener("click", () => {
+      toast("Finding vendors for this board…");
+    });
+    document.getElementById("btn-board-ai").addEventListener("click", () => {
+      toast(currentBoard
+        ? `Ask AI about “${currentBoard.name}”…`
+        : "Ask AI about this board…");
+    });
+    document.getElementById("board-event-chip").addEventListener("click", () => {
+      if (currentBoard?.event) toast(`Open ${currentBoard.event}`);
+    });
+
+    renderGrid();
+  </script>
+</body>
+
+</html>

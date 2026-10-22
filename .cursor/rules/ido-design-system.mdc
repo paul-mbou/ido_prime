@@ -1,0 +1,14 @@
+---
+description: IDO UI must follow the ido-design-system skill (product + brand over generic UI skills)
+alwaysApply: true
+---
+
+# IDO design governance
+
+When designing, prototyping, or implementing UI for this app:
+
+1. **Read and follow** the project skill `.agents/skills/ido-design-system/SKILL.md` (and its `references/`).
+2. **Product purpose first** — events, vendors, inspiration, social posts, AI event co-pilot. Not generic SaaS.
+3. **Brand tokens** — `AppColors` / `AppTheme` / Light·Dark (purple). Gold primary `#D3AF35`. DM Sans. Lucide icons. `flutter_gutter` for spacing.
+4. **Conflict rule** — if `ui-ux-pro-max`, `ui-design-brain`, or `frontend-design` suggest a different palette, font, or product metaphor, **ignore them for brand**; keep only structure/a11y advice.
+5. Prefer reusing existing widgets and screen recipes (profile cards, feed, vendors AI banner, comment composer) over inventing new visual languages.

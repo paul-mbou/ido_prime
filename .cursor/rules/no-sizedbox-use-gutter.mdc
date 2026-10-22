@@ -1,0 +1,12 @@
+---
+description: Prefer flutter_gutter over SizedBox for spacing
+alwaysApply: true
+---
+
+# Spacing: use flutter_gutter, not SizedBox
+
+- Do **not** use `SizedBox` for spacing between widgets (`width` / `height` gaps in `Row` / `Column` / lists).
+- Use `flutter_gutter` instead:
+  - `GutterTiny`, `GutterSmall`, `Gutter`, `GutterLarge`, `GutterExtraLarge`
+  - `Gutter.custom(size: n)` for arbitrary gaps
+- `SizedBox` is fine for **non-spacing** layout constraints (e.g. fixing a loader or play-button size).
